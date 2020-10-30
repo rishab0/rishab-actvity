@@ -14,8 +14,5 @@
                 "rishab\\actvity\\ActivityLogServiceProvider"
             ]
         }
-    },
-    "require": {
-        "rishab/actvity": "1.0.6"
     }
 }
