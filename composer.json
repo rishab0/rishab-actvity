@@ -15,4 +15,7 @@
             ]
         }
     },
+    "require": {
+        "rishab/actvity": "dev-master#v1.0.4"
+    }
 }
