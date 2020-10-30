@@ -16,6 +16,6 @@
         }
     },
     "require": {
-        "rishab/actvity": "dev-master#v1.0.4"
+        "rishab/actvity": "1.0.6"
     }
 }
