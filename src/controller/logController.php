@@ -6,26 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use rishab\actvity\ActivityLog;
+use Carbon\Carbon;
 
 class logController extends Controller
 {
-    public function view($id)
+    public function view(Request $request)
     {
-        $activity = ActivityLog::find($id);
-        $ip = @$activity->ip_address;
-
-        try {
-            $xml = simplexml_load_file("http://www.geoplugin.net/xml.gp?ip=" . $ip);
-        } catch (\Exception $ex) {
-            $xml = new stdClass();
-        }
-        $activity['ip_country'] = empty($xml) ?  (string) $xml->geoplugin_countryName : '--';
-        $activity['ip_city'] = empty($xml) ?  (string) $xml->geoplugin_city : '--';
-        $activity['ip_region'] = empty($xml) ?  (string) $xml->geoplugin_region : '--';
-        $activity['ip_lat'] = empty($xml) ?  (string) $xml->geoplugin_latitude : '--';
-        $activity['ip_long'] = empty($xml) ?  (string) $xml->geoplugin_longitude : '--';
+        $activity = ActivityLog::find($request->id);
         return view('log::view', compact('activity'));
     }
+
 
     public function logs(Request $request)
     {
@@ -47,13 +37,13 @@ class logController extends Controller
                 $query->where('status', 'LIKE', "%{$activityS}%");
             }
             if ($created_at) {
-                $query->where('dateTime', '=', strtotime($created_at));
+                $query->where('dateTime','=', strtotime($created_at));
             }
             if ($activity_by) {
                 $query->where('created_by', 'LIKE', "%{$activity_by}%");
             }
         })->latest()->paginate($pagination);
-        return view('log::log', compact('activity', 'moduleList', 'statusList', 'createdByList', 'module', 'activityS', 'created_at', 'activity_by'));
+        return view('log::log', compact('activity', 'moduleList', 'statusList', 'createdByList', 'module', 'activityS', 'created_at','activity_by'));
     }
     
     public function getLogByPath($path)
