@@ -27,13 +27,35 @@ class logController extends Controller
         return view('log::view', compact('activity'));
     }
 
-
-    public function logs()
+    public function logs(Request $request)
     {
-        $activity = ActivityLog::latest()->get();
-        return view('log::log', compact('activity'));
-    }
+        $moduleList = ActivityLog::whereNotNull('model')->select('model')->groupBy('model')->get();
+        $statusList = ActivityLog::whereNotNull('status')->select('status')->groupBy('status')->get();
+        $createdByList = ActivityLog::whereNotNull('created_by')->select('created_by')->groupBy('created_by')->get();
 
+        $module = $request->module;
+        $activityS = $request->activityS;
+        $created_at = $request->created_at;
+        $activity_by = $request->activity_by;
+        $pagination = env('LOG_PAGINATION') ?: 20;
+        // return $request;
+        $activity = ActivityLog::where(function ($query) use ($module, $activityS, $created_at, $activity_by) {
+            if ($module) {
+                $query->where('model', 'LIKE', "%{$module}%");
+            }
+            if ($activityS) {
+                $query->where('status', 'LIKE', "%{$activityS}%");
+            }
+            if ($created_at) {
+                $query->where('dateTime', '=', strtotime($created_at));
+            }
+            if ($activity_by) {
+                $query->where('created_by', 'LIKE', "%{$activity_by}%");
+            }
+        })->latest()->paginate($pagination);
+        return view('log::log', compact('activity', 'moduleList', 'statusList', 'createdByList', 'module', 'activityS', 'created_at', 'activity_by'));
+    }
+    
     public function getLogByPath($path)
     {
         $logs = \File::get($path);
@@ -70,12 +92,11 @@ class logController extends Controller
             $fileName =  $getFirstLog = !empty($files) ? $files[0] : '';
         }
 
-        if(file_exists($fileName))
-        {
+        if (file_exists($fileName)) {
             $pattern = "/^\[(?<date>.*)\]\s(?<env>\w+)\.(?<type>\w+):(?<message>.*)/m";
             $content = file_get_contents($fileName);
             preg_match_all($pattern, $content, $matches, PREG_SET_ORDER, 0);
-    
+
             $logs = [];
             foreach ($matches as $match) {
                 $logs[] = [
@@ -85,12 +106,12 @@ class logController extends Controller
                     'message' => trim($match['message'])
                 ];
             }
-    
+
             preg_match('/(?<=laravel-)(.*)(?=.log)/', $fileName, $dtMatch);
             $date = $dtMatch[0];
             $availableDates = $this->getLogFileDates();
         }
-        
+
 
         $data = [
             'available_log_dates' => @$availableDates,
