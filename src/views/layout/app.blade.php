@@ -212,12 +212,41 @@
         .badge.badge-env {
             background-color: #6A1B9A;
         }
+        .date-col ul{
+            border-radius: 4px;
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            border: 1px solid rgba(0,0,0,.125);
+        }
+        .date-col ul .date-head {
+            font-size: 16px ;
+            font-weight: 500;
+        }
+        .date-col ul li{
+            border-bottom: 1px solid rgba(0,0,0,.125);
+            background:rgba(0,0,0,.03);
+            padding:12px 22px;
+        }
+        .date-col ul li a{
+            color: #444;
+            text-decoration: none;
+        }
+        .date-col ul li.active{
+            background-color: #007bff;
+        }
+        .date-col ul li.active a{
+            color: #fff;
+        } 
+        .download_btn{
+            float: right;
+        }
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark p-0">
-        <a href="https://onerealm.site/log-viewer" class="navbar-brand mr-0">
+        <a href="#" class="navbar-brand mr-0">
             <i class="fa fa-fw fa-book"></i> LogViewer
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -226,13 +255,18 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item ">
-                    <a href="https://onerealm.site/log-viewer" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="fa fa-dashboard"></i> Dashboard
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a href="{{env('APP_URL')}}/logs" class="nav-link">
+                    <a href="{{env('APP_URL')}}/activity-log" class="nav-link">
                         <i class="fa fa-archive"></i> Logs
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a href="{{env('APP_URL')}}/system-log" class="nav-link">
+                        <i class="fa fa-archive"></i> System log
                     </a>
                 </li>
             </ul>

@@ -8,6 +8,11 @@
         "email": "rishab.goyal@softuvo.com"
     }],
     "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "rishab\\actvity\\": "src/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
