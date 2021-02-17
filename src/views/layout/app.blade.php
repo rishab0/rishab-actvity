@@ -390,7 +390,7 @@
                 LogReporting - <span class="badge badge-info">version 8.0.0</span>
             </p>
             <p class="text-muted pull-right">
-                Created with <i class="fa fa-heart"></i> Softuvo <sup>&copy;</sup>
+                Created with <i class="fa fa-heart"></i> <a href="https://www.softuvo.com/">Softuvo</a> <sup>&copy;</sup>
             </p>
         </div>
     </footer>
