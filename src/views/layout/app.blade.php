@@ -387,7 +387,7 @@
     <footer class="main-footer">
         <div class="container-fluid">
             <p class="text-muted pull-left">
-                LogReporting - <span class="badge badge-info">version 8.0.0</span>
+                LogReporting - <span class="badge badge-info">version 11.0.0</span>
             </p>
             <p class="text-muted pull-right">
                 Created with <i class="fa fa-heart"></i> <a href="https://www.softuvo.com/">Softuvo</a> <sup>&copy;</sup>

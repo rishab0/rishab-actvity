@@ -6,7 +6,7 @@
 
 Route::group(env('LOG_AUTH') ?  ['middleware' => array(env('LOG_AUTH')), 'namespace' => 'rishab'] : ['namespace' => 'rishab'], function () {
     Route::get('activity-log', 'actvity\controller\logController@logs');
-    Route::get('view-log/{id}', 'actvity\controller\logController@view');
+    Route::post('view-log', 'actvity\controller\logController@view');
 
 
     Route::get('system-log', 'actvity\controller\logController@systemLog');

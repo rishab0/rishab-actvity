@@ -13,7 +13,7 @@ class activity extends Eloquent
 
     public static function add($data)
     {
-        $data['status'] = 'add';
+        // $data['status'] = 'add';
         return ActivityLog::add($data);
     }
 

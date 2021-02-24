@@ -45,16 +45,18 @@ class ActivityLog extends Eloquent
     {
         $key = env('SNOOPI_KEY');
         try {
-            $json  = file_get_contents('https://api.snoopi.io/' . $ip . '?apikey=' . $key . '');
-            $xml = json_decode($json, true);
+            $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+            $xml = json_decode(json_encode($details), true);
+            $loc =  explode(',',$xml['loc']);
         } catch (\Exception $ex) {
-            $xml = new \stdClass();
-        }
-        $activity['ip_country'] = empty($xml) ?   $xml['CountryName'] : null;
-        $activity['ip_city'] = empty($xml) ?   $xml['City'] : null;
-        $activity['ip_region'] = empty($xml) ?   $xml['State'] : null;
-        $activity['ip_lat'] = empty($xml) ?   $xml['Latitude'] : null;
-        $activity['ip_long'] = empty($xml) ?   $xml['Longitude'] : null;
+            $xml = [];
+        }        
+        $activity['ip_country'] = !empty($xml) ?   $xml['country'] : null;
+        $activity['ip_city'] = !empty($xml) ?   $xml['city'] : null;
+        $activity['ip_region'] = !empty($xml) ?   $xml['region'] : null;
+        $activity['ip_lat'] = !empty($xml) ?   $loc[0] : null;
+        $activity['ip_long'] = !empty($xml) ?   $loc[1] : null;
+    
         return $activity;
     }
 
